@@ -1,0 +1,123 @@
+mixin list(arr)
+  .header__list
+    ul.header__links
+      each value in arr
+        li.header__item
+          a(href="#!" aria-label=value)= value
+      a(href="#!" aria-label="login")
+        li.header__button login
+    .header__brands 
+      +brands
+
+mixin details(data)
+  each value in data
+    -let detailsClass= (value["active"]) ? `details__item_active` : ``
+    .details__item(class= detailsClass)
+      img.details__image(src= value["src"], alt= value["title"])
+      .details__box
+        h1.details__title= value["title"]
+        p.details__subtitle= value["subtitle"]
+        a(href="#!" aria-label="more info") 
+          .details__button More Info
+
+mixin extensions(data)
+  h1.extensions__title Download the extension
+  p.extensions__subtitle We’ve got more browsers in the pipeline. Please do let us know if you’ve got a favourite you’d like us to prioritize.
+  .extensions__box
+    each value in data
+      .extensions__item 
+        img.extensions__image(src=`./assets/images/logo-${value["title"]}.svg`, alt= value["title"])
+        p.extensions__caption Add to 
+          span.extensions__span= value["title"]
+        p.extensions__version= `Minimum version ${value["version"]}`
+        .extensions__button= `Add & Install Extension`
+
+mixin questions(data)
+  h1.questions__title Frequently Asked Questions
+  p.questions__subtitle Here are some of our FAQs. If you have any other questions you’d like answered please feel free to email us.
+  each value in data 
+    .questions__item
+      .questions__header
+        p.questions__question= value["title"]
+        img.questions__icon(src="./assets/images/icon-arrow.svg")
+      p.questions__answer= value["subtitle"]
+  .questions__button More Info
+
+mixin brands
+  a(href="https://www.facebook.com" aria-label="facebook" target="_blank") 
+    img(src="./assets/images/icon-facebook.svg", alt="facebook")    
+  a(href="https://www.twitter.com" aria-label="facebook" target="_blank") 
+    img(src="./assets/images/icon-twitter.svg", alt="twitter")  
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Bookmark landing page
+    link(rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png")
+    link(rel="stylesheet", href="./assets/styles/style.css")
+  body 
+    header.header
+      .header__nav
+        a.header__link(href="#" aria-label="home") 
+          img.header__logo(src="./assets/images/logo-bookmark.svg", alt="bookmark")
+        img.header__burger(src="./assets/images/icon-hamburger.svg", alt="menu")
+        +list(["features", "pricing", "contact"])
+    main.main
+      .main__box
+        img.main__image(src="./assets/images/illustration-hero.svg", alt="hero")
+        section.article 
+          h1.article__title A Simple Bookmark Manager
+          p.article__subtitle A clean and simple interface to organize your favourite websites. Open a new browser tab and see your sites load instantly. Try it for free.
+          .article__box
+            .article__button.article__button_blue Get it on Chrome
+            .article__button Get it on Firefox
+      section.features
+        h1.features__title Features
+        p.features__subtitle  Our aim is to make it quick and easy for you to access your favourite websites. Your bookmarks sync between your devices so you can access them on the go.
+        ul.features__list 
+          li.features__item.features__item_active Simple Bookmarking
+          li.features__item Speedy Searching
+          li.features__item Easy Sharing
+      section.details
+        +details([
+          {"title": "Bookmark in one click", "subtitle": "Organize your bookmarks however you like. Our simple drag-and-drop interface gives you complete control over how you manage your favourite sites.", "src": "./assets/images/illustration-features-tab-1.svg", "active": true},
+          {"title": "Intelligent search", "subtitle": "Our powerful search feature will help you find saved sites in no time at all. No need to trawl through all of your bookmarks.", "src": "./assets/images/illustration-features-tab-2.svg", "active": false},
+          {"title": "Share your bookmarks", "subtitle": "Easily share your bookmarks and collections with others. Create a shareable link that you can send at the click of a button.", "src": "./assets/images/illustration-features-tab-3.svg", "active": false}
+        ])
+      section.extensions
+        +extensions([
+          {"title": "chrome", "version": "62"},
+          {"title": "firefox", "version": "55"},
+          {"title": "opera", "version": "46"}
+        ])
+      section.questions 
+        +questions([
+          {"title": "What is Bookmark?", "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tincidunt justo eget ultricies fringilla. Phasellus blandit ipsum quis quam ornare mattis."},
+          {"title": "How can I request a new browser?", "subtitle": "Vivamus luctus eros aliquet convallis ultricies. Mauris augue massa, ultricies non ligula. Suspendisse imperdiet. Vivamus luctus eros aliquet convallis ultricies. Mauris augue massa, ultricies non ligula. Suspendisse imperdie tVivamus luctus eros aliquet convallis ultricies. Mauris augue massa, ultricies non ligula. Suspendisse imperdiet."},
+          {"title": "Is there a mobile app?", "subtitle": "Sed consectetur quam id neque fermentum accumsan. Praesent luctus vestibulum dolor, ut condimentum urna vulputate eget. Cras in ligula quis est pharetra mattis sit amet pharetra purus. Sed sollicitudin ex et ultricies bibendum."},
+          {"title": "What about other Chromium browsers?", "subtitle": "Integer condimentum ipsum id imperdiet finibus. Vivamus in placerat mi, at euismod dui. Aliquam vitae neque eget nisl gravida pellentesque non ut velit."}
+        ])
+    .section.contact 
+      p.contact__text 35,000+ already joined
+      p.contact__title Stay up-to-date with what we’re doing
+      .contact__input-section
+        .contact__box
+          input.contact__input(type="email" placeholder="Enter your email address")
+          span.contact__span Whoops, make sure it's an email
+        button.contact__button(type="submit") Contact Us
+    footer.footer
+      a(href="#" aria-label="home") 
+        img.footer__logo(src="./assets/images/logo-bookmark.svg", alt="bookmark")
+      ul.footer__list
+        a(href="#!" aria-label="features") 
+          li.footer__item Features
+        a(href="#!" aria-label="pricing") 
+          li.footer__item Pricing
+        a(href="#!" aria-label="contact") 
+          li.footer__item Contact
+      .footer__brands
+        +brands   
+    script(src="./app.js")
